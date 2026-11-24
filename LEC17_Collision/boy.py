@@ -7,6 +7,7 @@ from transitions import Machine
 
 import game_world
 from ball import Ball
+from zombie import Zombie
 
 import game_framework
 
@@ -190,4 +191,5 @@ class Boy:
             print('COLLISION boy:ball')
             game_world.remove_object(other)
         if group == 'boy:zombie' and other.collectible:
-            quit
+            print('COLLISION boy:zombie')
+            close_canvas()
