@@ -64,6 +64,6 @@ class Zombie:
     def handle_collision(self, group, other):
         if group == 'boy:zombie':
             pass
-        if group == 'ball:zombie':
-            pass
+        elif group == 'zombie:ball':
+            game_world.remove_object(self)
 

@@ -140,6 +140,7 @@ class Boy:
         game_world.add_oject(ball)
         game_world.add_collision_pair('grass:ball', None, ball)
         game_world.add_collision_pair('boy:ball', self, ball)
+        game_world.add_collision_pair('zombie:ball', self, ball)
 
     def pause(self):
         self.pressed_keys.clear()
@@ -190,6 +191,8 @@ class Boy:
             self.ball_count += 1
             print('COLLISION boy:ball')
             game_world.remove_object(other)
-        if group == 'boy:zombie' and other.collectible:
+        elif group == 'boy:zombie' and other.collectible:
             print('COLLISION boy:zombie')
             close_canvas()
+        elif group == 'zombie:ball':
+            game_world.remove_object(self.fire_ball)

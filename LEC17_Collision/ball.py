@@ -2,6 +2,7 @@ from pico2d import draw_rectangle, get_canvas_width, load_image
 
 import game_world
 import game_framework
+from zombie import Zombie
 
 LAUNCH_SPEED_X = 300.0
 LAUNCH_SPEED_Y = 300.0
@@ -47,3 +48,5 @@ class Ball:
             self.velocity_x = 0
             self.velocity_y = 0
             self.collectible = True
+        elif group == 'zombie:ball':
+            game_world.remove_object(self)
