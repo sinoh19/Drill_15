@@ -13,4 +13,9 @@ class Grass:
         self.image.draw(1200, 30)
         self.ruler_image.draw(800, 350)
 
+    def get_bb(self):
+        return 0, 0, 1600, 50
+
+    def handle_collision(self, group, other):
+        pass
 

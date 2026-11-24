@@ -1,11 +1,19 @@
+import random
+import os
+import sys
+
 from pico2d import *
+
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
+from Labs.LEC17_Collision.zombie import Zombie
+from ball import Ball
 import game_world
 import game_framework
 from boy import Boy
 from grass import Grass
-from ball import Ball
-from zombie import Zombie
-import random
 
 boy = None
 
@@ -33,6 +41,22 @@ def init():
     grass = Grass()
     game_world.add_oject(grass, 0)
 
+    balls = [Ball(random.randint(100, 1600-100), 60, 0) for _ in range(30)]
+    for ball in balls:
+        game_world.add_oject(ball, 1)
+
+    game_world.add_collision_pair('grass:ball', grass, None)
+    game_world.add_collision_pair('boy:ball', boy, None)
+    game_world.add_collision_pair('ball:zombie', ball, None)
+    
+    for ball in balls:
+        game_world.add_collision_pair('boy:ball', None, ball)
+
+    zombies = [Zombie() for _ in range(4)]
+    game_world.add_collision_pair('boy:zombie', boy, None)
+    for zombie in zombies:
+        game_world.add_oject(zombie, 1)
+        game_world.add_collision_pair('boy:zombie', zombie, None)
 
 def pause():
     boy.pause()
@@ -50,14 +74,12 @@ def finish():
 
 def update():
     game_world.update()
+    game_world.handle_collisions()
 
 def render():
     clear_canvas()
     game_world.render()
     update_canvas()
-
-
-
 
 
 
